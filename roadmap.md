@@ -1,8 +1,8 @@
 # PaperFly build roadmap
 
-- [ ] Establish the PaperFly visual system and typography
-- [ ] Build the complete investor portfolio page and responsive navigation
-- [ ] Add interactive Note provenance and operational workflow controls
-- [ ] Add revenue, unit economics, financial ask, impact, and team content
-- [ ] Add print-ready pitch download behavior and page metadata
-- [ ] Verify responsive rendering, interactions, and current build status
+- [x] Establish the PaperFly visual system and typography
+- [x] Build the complete investor portfolio page and responsive navigation
+- [x] Add interactive Note provenance and operational workflow controls
+- [x] Add revenue, unit economics, financial ask, impact, and team content
+- [x] Add print-ready pitch download behavior and page metadata
+- [x] Verify responsive rendering, interactions, and current build status
