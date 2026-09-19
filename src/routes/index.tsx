@@ -4,6 +4,7 @@ import {
   ArrowDown, ArrowRight, BarChart3, Check, ChevronRight, Download, Droplets,
   Factory, FileCheck2, Leaf, Menu, PackageCheck, Recycle, ShieldCheck, Sparkles,
   Sprout, Trees, Users, WalletCards, X, Zap,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -51,7 +52,7 @@ const costs = [
   ["Plastic-free paper band", "₹1.00", "₹0.80"], ["Hub & mill logistics", "₹4.40", "₹3.50"],
   ["QC & wastage buffer", "₹1.50", "₹1.50"],
 ];
-const impact = [
+const impact: Array<[string, string, LucideIcon]> = [
   ["272 MT", "Paper diverted", Recycle], ["8,432", "Trees preserved", Trees], ["7.07M L", "Water saved", Droplets],
   ["1,088 MWh", "Energy conserved", Zap], ["5.15 Lakh", "Notebooks returned", PackageCheck], ["₹5.4 Lakh", "Student savings", WalletCards],
   ["100", "Campus ambassadors", Users], ["40", "Safer sorting roles", ShieldCheck],
