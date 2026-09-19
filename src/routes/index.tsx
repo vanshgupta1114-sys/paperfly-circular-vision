@@ -1,24 +1,131 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import {
+  ArrowDown, ArrowRight, BarChart3, Check, ChevronRight, Download, Droplets,
+  Factory, FileCheck2, Leaf, Menu, PackageCheck, Recycle, ShieldCheck, Sparkles,
+  Sprout, Trees, Users, WalletCards, X, Zap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({ meta: [
+    { title: "PaperFly — Campus Waste, Reborn" },
+    { name: "description", content: "PaperFly turns institutional paper waste into affordable, traceable campus stationery." },
+    { property: "og:title", content: "PaperFly — Closed-Loop Campus Circularity" },
+    { property: "og:description", content: "The investor portfolio for PaperFly by Case Catalysts." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ]}),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const nav = [
+  ["Overview", "overview"], ["The Product", "product"], ["Operational Loop", "operations"],
+  ["Unit Economics", "economics"], ["Financials & Ask", "financials"], ["Impact", "impact"], ["Founders", "founders"],
+];
+const counters = [
+  ["₹37 → ₹29", "COGS / notebook", "Year 1 → Year 3"], ["₹3.59 Cr", "Year-3 revenue", "Delhi NCR beachhead"],
+  ["Month 16–17", "EBITDA break-even", "Projected timeline"], ["272 MT", "Paper diverted", "Over three years"],
+];
+const problems = [
+  ["01", "The Delhi University catalyst", "In 2024, the Delhi High Court halted DUSU vote counting over election paper defacement. Over 1.4L+ voters see streets buried in flyers printed at 30–40 paise a copy—despite Lyngdoh Committee bans."],
+  ["02", "The institutional dilemma", "Colleges sit on tonnes of confidential exam scripts and admin records, with no certified destruction and no verifiable documentation for NAAC Criterion 7 audits."],
+  ["03", "The broken market", "Generic recycled paper is weak and bleeds ink. Premium eco-stationery costs ₹250–₹400+, versus ₹48 for Classmate. PaperFly closes the quality-price gap at ₹65–₹99."],
+];
+const products = [
+  ["01 · Now", "Campus A5 Notebook", "100 pages · 80 GSM", "Smooth unbleached paper, with a kraft cover made from recycled campus flyers.", "₹79 MRP", "₹59–₹69 with exchange"],
+  ["02 · Phase 2", "Corporate ESG Diaries", "Custom executive planners", "Branded merchandise paired with verified BRSR waste disclosures.", "₹200 avg", "Institutional gifting"],
+  ["03 · Phase 3", "Government Registers", "Heavy-duty formats", "Durable registers produced through GeM file-weeding drives.", "₹125 avg", "Public procurement"],
+];
+const revenue = [
+  ["B2B Circular Contracts", "₹97.5L", "27%", "bg-primary"], ["Campus D2C", "₹89.4L", "25%", "bg-kraft"],
+  ["Eco-Retail & Online", "₹82.0L", "23%", "bg-leaf"], ["Corporate ESG", "₹80.0L", "22%", "bg-forest-soft"],
+  ["Government Supplies", "₹10.0L", "3%", "bg-paper-deep"],
+];
+const costs = [
+  ["Raw waste collection & transport", "₹2.30", "₹1.80"], ["Mechanical milling", "₹12.60", "₹9.00"],
+  ["Cover board", "₹3.20", "₹2.90"], ["Bound seed-paper Note", "₹4.50", "₹3.50"],
+  ["Ruling & inner print", "₹1.50", "₹1.20"], ["Binding & finishing", "₹6.00", "₹4.80"],
+  ["Plastic-free paper band", "₹1.00", "₹0.80"], ["Hub & mill logistics", "₹4.40", "₹3.50"],
+  ["QC & wastage buffer", "₹1.50", "₹1.50"],
+];
+const impact = [
+  ["272 MT", "Paper diverted", Recycle], ["8,432", "Trees preserved", Trees], ["7.07M L", "Water saved", Droplets],
+  ["1,088 MWh", "Energy conserved", Zap], ["5.15 Lakh", "Notebooks returned", PackageCheck], ["₹5.4 Lakh", "Student savings", WalletCards],
+  ["100", "Campus ambassadors", Users], ["40", "Safer sorting roles", ShieldCheck],
+];
+
+function Logo() {
+  return <a href="#overview" className="flex shrink-0 items-center gap-2 text-primary" aria-label="PaperFly home"><span className="grid size-8 place-items-center rounded-md bg-primary text-primary-foreground"><Sprout size={17}/></span><span className="text-lg font-extrabold">PaperFly</span></a>;
+}
+
+function SectionHeading({ kicker, title, copy }: { kicker: string; title: string; copy?: string }) {
+  return <div className="mb-9 max-w-3xl"><p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-kraft">{kicker}</p><h2 className="text-3xl font-bold leading-tight text-primary md:text-5xl">{title}</h2>{copy && <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">{copy}</p>}</div>;
+}
+
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [blind, setBlind] = useState(true);
+  const printPitch = () => window.print();
+  return <main className="overflow-hidden bg-background text-foreground">
+    <nav className="sticky top-0 z-50 border-b border-border/80 bg-background/95 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-[1500px] items-center gap-5 px-4 lg:px-7">
+        <Logo/><span className="hidden rounded-full border border-border bg-card px-3 py-1 text-[10px] font-bold uppercase text-muted-foreground xl:block">Round 1 Portfolio · Case Catalysts</span>
+        <div className="mx-auto hidden items-center gap-5 xl:flex">{nav.map(([label,id]) => <a key={id} href={`#${id}`} className="text-[11px] font-semibold text-muted-foreground transition-colors hover:text-primary">{label}</a>)}</div>
+        <div className="ml-auto hidden gap-2 md:flex"><Button variant="outline" onClick={printPitch}><Download/> Download Pitch PDF</Button><Button asChild><a href="#financials">The Shark Ask · ₹20L</a></Button></div>
+        <Button size="icon" variant="outline" className="ml-auto xl:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X/> : <Menu/>}</Button>
+      </div>
+      {menuOpen && <div className="border-t border-border bg-card px-4 py-4 xl:hidden"><div className="grid gap-1">{nav.map(([label,id]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} className="flex items-center justify-between border-b border-border py-3 text-sm font-semibold text-primary">{label}<ChevronRight size={16}/></a>)}<div className="mt-3 grid grid-cols-2 gap-2"><Button variant="outline" onClick={printPitch}>Pitch PDF</Button><Button asChild><a href="#financials" onClick={() => setMenuOpen(false)}>Ask · ₹20L</a></Button></div></div></div>}
+    </nav>
+
+    <section id="overview" className="relative mx-auto min-h-[calc(100svh-4rem)] max-w-[1500px] px-4 pb-14 pt-14 md:px-8 md:pt-24">
+      <div className="grid items-end gap-12 lg:grid-cols-[1.25fr_.75fr]">
+        <div className="reveal"><div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-bold text-primary"><Recycle size={14}/> Closed-Loop Institutional Circularity · Delhi NCR</div>
+          <h1 className="max-w-5xl text-5xl font-extrabold leading-[1.03] text-primary md:text-7xl lg:text-[5.6rem]">From campus waste,<br/><span className="font-serif font-medium italic text-kraft">to campus pride.</span></h1>
+          <p className="mt-7 max-w-3xl text-base leading-7 text-muted-foreground md:text-xl md:leading-8">PaperFly intercepts academic and election paper waste at source, mills it mechanically without chemical de-inking or bleaching, and returns high-grade 80 GSM seed-paper stationery at a fraction of boutique eco-prices.</p>
+          <div className="no-print mt-8 flex flex-wrap gap-3"><Button size="lg" asChild><a href="#product">Inspect Prototype & The Note <ArrowDown/></a></Button><Button size="lg" variant="outline" asChild><a href="#economics">View Institutional Offering</a></Button></div>
+        </div>
+        <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
+          <div className="absolute -left-5 top-8 h-[78%] w-full rotate-[-4deg] rounded-lg bg-kraft-soft"></div>
+          <div className="paper-shadow relative rotate-[2deg] rounded-lg border border-border bg-card p-7"><div className="mb-16 flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground"><span>PF / A5 · 001</span><Leaf size={18} className="text-leaf"/></div><div className="border-l-2 border-kraft pl-5"><p className="font-serif text-3xl leading-tight text-primary">Paper is not waste.<br/>It is a material<br/><em>between lives.</em></p></div><div className="mt-16 flex items-end justify-between border-t border-dashed border-border pt-4"><span className="text-xs text-muted-foreground">100 pages · 80 GSM</span><span className="text-2xl font-extrabold text-primary">₹79</span></div></div>
+        </div>
+      </div>
+      <div className="mt-16 grid grid-cols-2 border-y border-border md:grid-cols-4">{counters.map(([value,label,note],i) => <div key={label} className={`py-6 ${i%2===0?'pr-4':'pl-4'} md:border-r md:px-6 md:first:pl-0 md:last:border-r-0`}><p className="text-2xl font-extrabold text-primary md:text-3xl">{value}</p><p className="mt-1 text-xs font-bold uppercase text-foreground">{label}</p><p className="mt-1 text-[11px] text-muted-foreground">{note}</p></div>)}</div>
+    </section>
+
+    <section className="border-y border-border bg-card"><div className="mx-auto max-w-[1500px] px-4 py-20 md:px-8"><SectionHeading kicker="Why now" title="A visible crisis. An invisible liability." copy="PaperFly joins two neglected institutional problems into one traceable circular system."/><div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border lg:grid-cols-3">{problems.map(([n,t,c]) => <article key={n} className="bg-card p-7 md:p-9"><span className="font-serif text-4xl text-kraft">{n}</span><h3 className="mt-8 text-xl font-bold text-primary">{t}</h3><p className="mt-4 text-sm leading-7 text-muted-foreground">{c}</p></article>)}</div></div></section>
+
+    <section id="product" className="mx-auto max-w-[1500px] px-4 py-20 md:px-8 md:py-28"><SectionHeading kicker="The product" title="Stationery with a return address." copy="Every format starts with recovered local fibre and ends with a clear next life."/>
+      <div className="grid gap-4 lg:grid-cols-3">{products.map(([tag,name,spec,copy,price,note]) => <article key={name} className="group rounded-lg border border-border bg-card p-6 transition-transform hover:-translate-y-1"><div className="flex items-start justify-between"><span className="text-[10px] font-bold uppercase tracking-[0.15em] text-kraft">{tag}</span><PackageCheck className="text-primary" size={20}/></div><h3 className="mt-12 text-xl font-bold text-primary">{name}</h3><p className="mt-2 text-xs font-bold uppercase text-muted-foreground">{spec}</p><p className="mt-5 min-h-20 text-sm leading-6 text-muted-foreground">{copy}</p><div className="mt-5 flex items-end justify-between border-t border-border pt-5"><strong className="text-2xl text-primary">{price}</strong><span className="text-right text-[11px] text-muted-foreground">{note}</span></div></article>)}</div>
+      <div className="mt-16 grid items-center gap-10 lg:grid-cols-[.72fr_1.28fr]"><div><span className="font-serif text-xl italic text-kraft">Core IP · The Note</span><h3 className="mt-3 text-4xl font-bold text-primary">Proof of origin,<br/>designed to bloom.</h3><p className="mt-5 leading-7 text-muted-foreground">A bound-in seed paper leaf transforms batch traceability into a ritual students remember—and repeat.</p><div className="mt-7 rounded-lg border border-border bg-card p-5"><div className="flex items-center justify-between gap-4"><div><p className="text-sm font-bold text-primary">Blind sourcing</p><p className="mt-1 text-xs leading-5 text-muted-foreground">Batch-level tracking only. No student records or private data exposed.</p></div><Switch checked={blind} onCheckedChange={setBlind} aria-label="Toggle blind sourcing"/></div><div className="mt-4 flex flex-wrap gap-2">{["Named", "Group", "Anonymous"].map((x,i)=><span key={x} className={`rounded-full px-3 py-1 text-[10px] font-bold ${blind && i===2?'bg-primary text-primary-foreground':'bg-secondary text-secondary-foreground'}`}>{x}</span>)}</div></div></div>
+        <article className="ruled-paper paper-shadow relative rounded-lg border border-border bg-card px-7 py-9 md:px-12 md:py-12"><div className="absolute bottom-5 left-4 top-5 border-l border-dashed border-kraft"></div><div className="ml-4"><div className="flex flex-wrap items-center justify-between gap-3"><span className="rounded-full bg-kraft-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary">PaperFly · Batch KM-27-03</span><Sprout className="text-leaf"/></div><blockquote className="mt-10 max-w-2xl font-serif text-3xl leading-tight text-primary md:text-4xl">“This notebook began its life as election flyers and exam sheets at Keshav Mahavidyalaya.”</blockquote><p className="mt-8 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">410 kg collected · March 2027 · 100% Unbleached Mechanical Milling</p><div className="mt-10 border-l-4 border-kraft bg-kraft-soft/70 p-5"><p className="font-serif text-lg italic text-primary">Finished? Tear me out, soak for 2 hours, plant 5 mm deep. Marigold seeds inside.</p><p className="mt-2 text-xs font-semibold text-primary">Return the notebook casing to any PaperFly kiosk for ₹10 off your next one.</p></div></div></article>
+      </div>
+    </section>
+
+    <section id="operations" className="border-y border-border bg-primary text-primary-foreground"><div className="mx-auto max-w-[1500px] px-4 py-20 md:px-8 md:py-28"><p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-kraft-soft">The operational loop</p><h2 className="max-w-3xl text-3xl font-bold md:text-5xl">Local fibre. Secure custody. Verified return.</h2>
+      <Tabs defaultValue="sort" className="mt-10"><TabsList className="grid h-auto w-full grid-cols-1 bg-primary-foreground/10 p-1 md:grid-cols-3"><TabsTrigger value="sort" className="min-h-12 text-left text-primary-foreground data-[state=active]:bg-primary-foreground data-[state=active]:text-primary">01 · Micro-Sorting</TabsTrigger><TabsTrigger value="mill" className="min-h-12 text-left text-primary-foreground data-[state=active]:bg-primary-foreground data-[state=active]:text-primary">02 · Partner Milling</TabsTrigger><TabsTrigger value="proof" className="min-h-12 text-left text-primary-foreground data-[state=active]:bg-primary-foreground data-[state=active]:text-primary">03 · Compliance</TabsTrigger></TabsList>
+        <TabsContent value="sort" className="mt-8"><div className="grid gap-4 md:grid-cols-3">{[["W","White","Exam sheets, admin files, notebook pages","Hydro-pulped into 80 GSM writing pages"],["C","Colour","Uncoated flyers and posters","Pressed into durable notebook covers"],["S","Secure","Confidential answer scripts","Tamper-evident bins · two-person rule"]].map(([x,t,c,o])=><div key={x} className="rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 p-6"><span className="grid size-12 place-items-center rounded-md bg-primary-foreground font-serif text-2xl text-primary">{x}</span><h3 className="mt-6 text-xl font-bold">{t}</h3><p className="mt-2 text-sm text-primary-foreground/70">{c}</p><p className="mt-6 border-t border-primary-foreground/15 pt-4 text-xs font-bold text-kraft-soft">{o}</p></div>)}</div></TabsContent>
+        <TabsContent value="mill" className="mt-8"><div className="grid gap-8 lg:grid-cols-[1fr_280px]"><ol className="grid gap-px overflow-hidden rounded-lg bg-primary-foreground/15 sm:grid-cols-2">{["Sealed delivery","Mechanical hydro-pulping","Multi-stage screening","Water-only washing","Gentle refining","Starch dry-strength additive","Cylinder-mould forming","Calendering & sizing","Batch QC","Binding"].map((x,i)=><li key={x} className="flex gap-4 bg-primary p-4"><span className="font-serif text-kraft-soft">{String(i+1).padStart(2,"0")}</span><span className="text-sm font-semibold">{x}</span></li>)}</ol><div className="rounded-lg bg-kraft p-6 text-accent-foreground"><Factory/><p className="mt-8 text-4xl font-extrabold">₹90<span className="text-base">/kg</span></p><p className="text-xs">Year 1 job work</p><ArrowDown className="my-4"/><p className="text-4xl font-extrabold">₹64<span className="text-base">/kg</span></p><p className="mt-1 text-xs">Year 3 scale</p><p className="mt-6 border-t border-accent-foreground/20 pt-4 text-xs leading-5">Western UP / Saharanpur partner mills</p></div></div></TabsContent>
+        <TabsContent value="proof" className="mt-8"><div className="grid gap-5 lg:grid-cols-2"><div className="rounded-lg border border-primary-foreground/20 p-7"><FileCheck2 size={28}/><h3 className="mt-6 text-2xl font-bold">48-Hour Destruction Certificate</h3><p className="mt-3 text-primary-foreground/70">Video logs and witnessed hydro-pulping convert confidential disposal into auditable proof.</p></div><div className="rounded-lg bg-primary-foreground p-7 text-primary"><Sparkles/><h3 className="mt-6 text-2xl font-bold">PaperFly Green Campus</h3><div className="mt-5 space-y-3">{[["Bronze","Bins + impact report"],["Silver","90% sorting purity"],["Gold","Zero-to-landfill + student return loop"]].map(([a,b])=><div key={a} className="flex justify-between border-b border-border pb-3 text-sm"><strong>{a}</strong><span className="text-muted-foreground">{b}</span></div>)}</div></div></div></TabsContent>
+      </Tabs></div></section>
+
+    <section id="economics" className="mx-auto max-w-[1500px] px-4 py-20 md:px-8 md:py-28"><SectionHeading kicker="Business model" title="Five channels. One material loop." copy="Year 3 revenue reaches ₹3.59 Cr through a diversified institutional and retail mix."/><div className="grid gap-10 lg:grid-cols-2"><div><div className="flex h-5 overflow-hidden rounded-sm">{revenue.map(([n,v,p,c])=><div key={n} className={`${c}`} style={{width:p}} title={`${n}: ${p}`}></div>)}</div><div className="mt-6 space-y-4">{revenue.map(([n,v,p,c])=><div key={n} className="grid grid-cols-[1fr_auto_auto] items-center gap-4 text-sm"><span className="flex items-center gap-3"><i className={`block size-2.5 rounded-sm ${c}`}></i>{n}</span><strong className="text-primary">{v}</strong><span className="w-9 text-right text-muted-foreground">{p}</span></div>)}</div></div>
+        <div className="overflow-hidden rounded-lg border border-border bg-card"><div className="grid grid-cols-[1fr_auto_auto] bg-secondary px-5 py-3 text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground"><span>Cost input / notebook</span><span className="w-16 text-right">Yr 1</span><span className="w-16 text-right">Yr 3</span></div>{costs.map(([n,a,b])=><div key={n} className="grid grid-cols-[1fr_auto_auto] border-t border-border px-5 py-2.5 text-xs"><span>{n}</span><span className="w-16 text-right text-muted-foreground">{a}</span><span className="w-16 text-right font-bold text-primary">{b}</span></div>)}<div className="grid grid-cols-[1fr_auto_auto] bg-primary px-5 py-4 text-sm font-bold text-primary-foreground"><span>Total COGS</span><span className="w-16 text-right">₹37</span><span className="w-16 text-right">₹29</span></div></div></div>
+      <div className="mt-8 rounded-lg bg-kraft-soft p-5 text-center text-primary"><strong className="text-2xl">50.3% → 58.9%</strong><span className="ml-3 text-sm font-semibold">blended gross margin by Year 3</span></div>
+    </section>
+
+    <section id="financials" className="border-y border-border bg-card"><div className="mx-auto max-w-[1500px] px-4 py-20 md:px-8 md:py-28"><SectionHeading kicker="Financials & the ask" title="Profitable scale, without owning a mill." copy="An asset-light operating model turns contracted institutional demand into widening contribution margins."/>
+      <div className="overflow-x-auto rounded-lg border border-border"><table className="w-full min-w-[720px] text-left"><thead className="bg-primary text-primary-foreground"><tr>{["Projection (₹ Lakhs)","Year 1 · 5 colleges","Year 2 · 20 + 5 offices","Year 3 · 50 + 25 + 3 govt"].map(x=><th key={x} className="p-5 text-xs uppercase">{x}</th>)}</tr></thead><tbody>{[["Revenue","₹17.9L","₹101.9L","₹358.9L"],["Gross profit","₹8.6L · 48.2%","₹55.1L · 54.1%","₹211.4L · 58.9%"],["EBITDA","−₹2.9L","₹9.8L · 9.6%","₹72.3L · 20.2%"]].map(r=><tr key={r[0]} className="border-t border-border">{r.map((x,i)=><td key={x} className={`p-5 text-sm ${i===0?'font-bold text-primary':''}`}>{x}</td>)}</tr>)}</tbody></table></div>
+      <div className="mt-10 grid gap-6 lg:grid-cols-[1.2fr_.8fr]"><article className="rounded-lg bg-primary p-7 text-primary-foreground md:p-10"><p className="text-xs font-bold uppercase tracking-[0.16em] text-kraft-soft">The Shark Ask</p><div className="mt-5 flex flex-wrap items-end gap-4"><strong className="text-5xl md:text-7xl">₹20 Lakhs</strong><span className="pb-2 text-xl">for <b>8% equity</b></span></div><p className="mt-3 text-sm text-primary-foreground/65">Post-money valuation ₹2.5 Cr · 0.7× Yr-3 revenue · 3.5× Yr-3 EBITDA</p><div className="mt-9 flex h-5 overflow-hidden rounded-sm"><div className="w-[30%] bg-kraft"></div><div className="w-[30%] bg-leaf"></div><div className="w-[15%] bg-kraft-soft"></div><div className="w-[12.5%] bg-paper-deep"></div><div className="w-[12.5%] bg-primary-foreground/40"></div></div><div className="mt-6 grid gap-3 sm:grid-cols-2">{[["30% · ₹6.0L","Collection infrastructure"],["30% · ₹6.0L","Working capital & mill advances"],["15% · ₹3.0L","Runway to break-even"],["12.5% · ₹2.5L","Tooling, testing & seed-paper"],["12.5% · ₹2.5L","Campus ambassadors & DUSU drives"]].map(([a,b])=><div key={b} className="text-xs"><b className="text-kraft-soft">{a}</b><p className="mt-1 text-primary-foreground/70">{b}</p></div>)}</div></article>
+        <article className="rounded-lg border border-kraft bg-kraft-soft/60 p-7 md:p-9"><BarChart3 className="text-kraft" size={30}/><p className="mt-8 text-xs font-bold uppercase tracking-[0.15em] text-kraft">Downside sensitivity</p><h3 className="mt-3 text-3xl font-bold text-primary">Resilient under a double shock.</h3><div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-md bg-border"><div className="bg-card p-5"><strong className="text-3xl text-primary">−30%</strong><p className="mt-1 text-xs text-muted-foreground">Volume</p></div><div className="bg-card p-5"><strong className="text-3xl text-primary">−10%</strong><p className="mt-1 text-xs text-muted-foreground">Price</p></div></div><p className="mt-6 text-sm leading-6 text-muted-foreground">Applied simultaneously, PaperFly remains near break-even without catastrophic cash drain.</p></article></div>
+    </div></section>
+
+    <section id="impact" className="mx-auto max-w-[1500px] px-4 py-20 md:px-8 md:py-28"><SectionHeading kicker="Measured impact" title="Waste avoided is only the beginning." copy="The loop creates measurable climate savings, student value, and safer livelihoods."/><div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border lg:grid-cols-4">{impact.map(([value,label,Icon])=><article key={String(label)} className="bg-card p-5 md:p-7"><Icon className="text-kraft" size={22}/><p className="mt-8 text-2xl font-extrabold text-primary md:text-3xl">{String(value)}</p><p className="mt-2 text-xs font-semibold text-muted-foreground">{String(label)}</p></article>)}</div><div className="mt-8 flex flex-wrap items-center gap-3"><span className="mr-2 text-xs font-bold uppercase text-muted-foreground">Aligned goals</span>{[[12,"Responsible Consumption"],[13,"Climate Action"],[15,"Life on Land"],[8,"Decent Work"],[4,"Quality Education"]].map(([n,t])=><span key={n} className="flex items-center gap-2 rounded-full border border-border bg-card py-1.5 pl-1.5 pr-3 text-[10px] font-bold text-primary"><b className="grid size-6 place-items-center rounded-full bg-primary text-primary-foreground">{n}</b> SDG · {t}</span>)}</div></section>
+
+    <section id="founders" className="bg-primary text-primary-foreground"><div className="mx-auto max-w-[1500px] px-4 py-20 md:px-8 md:py-28"><div className="rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 p-5 text-center text-xs font-bold uppercase tracking-[0.1em] text-kraft-soft">Case Catalysts · Department of Management Studies · Keshav Mahavidyalaya · University of Delhi</div><div className="mt-12 grid gap-12 lg:grid-cols-[.7fr_1.3fr]"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-kraft-soft">The founders</p><h2 className="mt-3 text-4xl font-bold md:text-5xl">Built close to<br/>the problem.</h2><p className="mt-5 max-w-md text-sm leading-7 text-primary-foreground/65">A three-part founding team spanning institutional strategy, reverse logistics, and student-facing product design.</p></div><div className="grid gap-px overflow-hidden rounded-lg bg-primary-foreground/20 md:grid-cols-3">{[["VG","Vansh Gupta","Strategy Lead","Operations · Circular contracts · College admin liaisons"],["AG","Arav Goel","Supply Chain Lead","Partner mills · Reverse logistics · Sorting hubs"],["SK","Saksham Kodwalkar","Product Lead","Brand architecture · D2C kiosks · QC & certification"]].map(([i,n,r,d])=><article key={n} className="bg-primary p-6"><span className="grid size-11 place-items-center rounded-full bg-kraft font-serif text-accent-foreground">{i}</span><h3 className="mt-8 text-xl font-bold">{n}</h3><p className="mt-1 text-xs font-bold text-kraft-soft">Co-Founder & {r}</p><p className="mt-5 text-xs leading-6 text-primary-foreground/60">{d}</p></article>)}</div></div></div></section>
+
+    <footer className="bg-foreground text-background"><div className="mx-auto max-w-[1500px] px-4 py-12 md:px-8"><div className="flex flex-col justify-between gap-10 md:flex-row"><div><div className="flex items-center gap-2"><Sprout/><span className="text-xl font-extrabold">PaperFly</span></div><p className="mt-4 max-w-lg text-sm leading-6 text-background/60">Submitted for COMQUEST ’26–’27 · Shark Tank Pitching Wars · The Entrepreneurship Cell, Lady Shri Ram College for Women.</p></div><Button className="no-print self-start bg-kraft text-accent-foreground hover:bg-kraft/90" onClick={printPitch}><Download/> Download pitch as PDF</Button></div><div className="mt-10 border-t border-background/15 pt-6 text-[10px] leading-5 text-background/45"><b className="text-background/70">Sources & references:</b> CSE 2024 · World Bank “What a Waste 2.0” · Delhi High Court DUSU 2024 Records · AISHE & UDISE+ · DARPG Special Campaign · Bureau of International Recycling.</div></div></footer>
+  </main>;
 }
